@@ -1,5 +1,6 @@
 const express = require("express")
 const Users = require("../users/users-model")
+const bcrypt = require('bcryptjs')
 
 const router = express.Router()
 
@@ -24,8 +25,15 @@ router.post("/login", async (req, res, next) => {
 	try {
 		const { username, password } = req.body
 		const user = await Users.findBy({ username }).first()
+		// const hash = await bcrypt.hash(password, 14)
 
-		if (!user) {
+		// since bcrypt hashes generate different results due to salting,
+		// we rely on the internal functions to compare hashes rather than doing it with 
+		// !==user.password
+
+		const passwordValid = await bcrypt.compare(password, user.password)
+
+		if (!user || !passwordValid) {
 			return res.status(401).json({
 				message: "Invalid Credentials",
 			})
@@ -38,5 +46,27 @@ router.post("/login", async (req, res, next) => {
 		next(err)
 	}
 })
+
+// function validateUser(req, res, next){
+// 	const username = req.headers.username
+// 	const password = req.headers.password
+
+// 	const user = await Users.findBy({ username, password }).first()
+// 	// req.headers.username
+// 	// req.headers.password
+	
+// 	if (!user || !passwordValid){
+// 		return res.status(401).json({
+// 			message: "invalid credentials",
+// 		})
+// 	}
+
+// 	else {
+// 		return next()
+// 	}
+// }
+
+
+
 
 module.exports = router

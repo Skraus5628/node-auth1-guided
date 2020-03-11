@@ -15,3 +15,28 @@ Guided project for **Node Auth 1** Module.
 - [ ] type `npm run server` to start the API.
 
 Please follow along as the instructor adds authentication to the API.
+
+
+<!-- Notes! -->
+ 
+<!-- Authentication (AuthN) = Who are you?
+     Authorization (AuthZ)  = What do you want? -->
+
+<!--                Authentication Core Principles:
+    -Requiring strong passwords
+    -Properly storing passwords
+    -Preventing brute-force attacks -->
+
+<!-- brute force example of rainbow table -->
+<!-- [Rainbow Table]
+md5_hash                                    associated_password
+----------------------------------------------------------------------
+45893908239012307910981890                  hello world
+3095874725872843741039890                   w3bpt10
+2093750189701734290171070                   lambda_school
+>
+
+<!-- md5 is good for files, but not passwords -->
+
+<!-- b crypt  is great for passwords
+https://github.com/dcodeIO/bcrypt.js -->
