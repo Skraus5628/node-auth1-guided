@@ -1,6 +1,7 @@
 const express = require("express")
 const Users = require("../users/users-model")
 const bcrypt = require('bcryptjs')
+const { sessions,restrict } = require('../middleware/restrict')
 
 const router = express.Router()
 
@@ -39,12 +40,31 @@ router.post("/login", async (req, res, next) => {
 			})
 		}
 
+		// const authToken = Math.random()
+		// sessions[authToken] = user.id
+
+		// res.setHeader("Set-Cookie", `token=${authToken}; Path=/`)
+		req.session.user = user 
+		// same thing as above, but using express-session
+
 		res.json({
 			message: `Welcome ${user.username}!`,
 		})
 	} catch(err) {
 		next(err)
 	}
+})
+
+router.get("/logout", restrict(), (req,res, next) =>{
+	req.session.destroy((err) =>{
+		if (err) {
+			next(err)
+		} else {
+			res.json({
+				message: "Successfully logged out"
+			})
+		}
+	})
 })
 
 // function validateUser(req, res, next){

@@ -40,3 +40,15 @@ md5_hash                                    associated_password
 
 <!-- b crypt  is great for passwords
 https://github.com/dcodeIO/bcrypt.js -->
+
+
+<!-- Client sends credentials to server (login)
+     Server verifies credentials (checks bcrypt hash)
+     Server creates a session for the client
+     Server sends back the session data as a set-cookie header
+     Client stores the cookie in its cookie jar
+     Client sends cookie on every subsequent request
+     Server verifies the cookie is valid
+     Server provides access to the resource (authorized!)
+
+
